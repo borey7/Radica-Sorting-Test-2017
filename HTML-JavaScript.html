@@ -37,8 +37,8 @@
     //Functions
     function addEntry() {
         UserID = Users.length + 1;
-        var UserName = $('#UserName').val();
-        var UserOccupation = $('#UserOccupation').val();
+        UserName = $('#UserName').val();
+        UserOccupation = $('#UserOccupation').val();
         Users.push({ UserID, UserName, UserOccupation });
         addTableRow(UserID);
         resetForm();
