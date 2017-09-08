@@ -26,84 +26,83 @@
             <td>Occupation</td>
         </tr>
     </table>
+    <script>
+        //Properties    
+        var Users = [];
+        var UserID;
+        var UserName;
+        var UserOccupation;
+
+        //Functions
+        function addEntry() {
+            UserID = Users.length + 1;
+            UserName = $('#UserName').val();
+            UserOccupation = $('#UserOccupation').val();
+            Users.push({ UserID, UserName, UserOccupation });
+            addTableRow(UserID);
+            resetForm();
+        }
+
+        function resetForm() {
+            $('#UserID').val(UserID + 1);
+            $('#UserName').val("");
+            $('#UserOccupation').val("");
+        }
+
+        function addTableRow(n) {
+            var table = document.getElementById('ViewAllUsers');
+            var row = table.insertRow(n);
+            var col1 = row.insertCell(0);
+            var col2 = row.insertCell(1);
+            var col3 = row.insertCell(2);
+            col1.innerHTML = Users[n - 1].UserID;
+            col2.innerHTML = Users[n - 1].UserName;
+            col3.innerHTML = Users[n - 1].UserOccupation;
+        }
+
+        function updateTable() {
+            var table = '<table style="width:50%" border="1" id="ViewAllUsers"><tr><td>ID</td><td>Name</td><td>Occupation</td></tr></table>';
+            $('#ViewAllUsers').replaceWith(table);
+            var i;
+            for (i = 1; i <= Users.length; ++i) {
+                addTableRow(i);
+            }
+        }
+
+        function sort(by) {
+            if (by == 'UserID') {
+                Users.sort(function (a, b) {
+                    return a.UserID - b.UserID;
+                });
+            }
+            else if (by == 'UserName') {
+                Users.sort(function (a, b) {
+                    var a_prop = a.UserName;
+                    var b_prop = b.UserName;
+                    return ((a_prop < b_prop) ? -1 : ((a_prop > b_prop) ? 1 : 0));
+                });
+            }
+            else if (by == 'UserOccupation') {
+                Users.sort(function (a, b) {
+                    var a_prop = a.UserOccupation;
+                    var b_prop = b.UserOccupation;
+                    return ((a_prop < b_prop) ? -1 : ((a_prop > b_prop) ? 1 : 0));
+                });
+
+            }
+            updateTable();
+        }
+
+        //Initial
+        $('#UserID').prop('readonly', true);
+        $('#UserID').val(1);
+
+        //Events
+        $('#AddUserButton').click(addEntry);
+        $('#SortBy').change(function () {
+            sort($('#SortBy').val());
+        });
+
+    </script>
 </body>
-<script>
-    //Properties    
-    var Users = [];
-    var UserID;
-    var UserName;
-    var UserOccupation;
-
-    //Functions
-    function addEntry() {
-        UserID = Users.length + 1;
-        UserName = $('#UserName').val();
-        UserOccupation = $('#UserOccupation').val();
-        Users.push({ UserID, UserName, UserOccupation });
-        addTableRow(UserID);
-        resetForm();
-    }
-
-    function resetForm() {
-        $('#UserID').val(UserID + 1);
-        $('#UserName').val("");
-        $('#UserOccupation').val("");
-    }
-
-    function addTableRow(n) {
-        var table = document.getElementById('ViewAllUsers');
-        var row = table.insertRow(n);
-        var col1 = row.insertCell(0);
-        var col2 = row.insertCell(1);
-        var col3 = row.insertCell(2);
-        col1.innerHTML = Users[n - 1].UserID;
-        col2.innerHTML = Users[n - 1].UserName;
-        col3.innerHTML = Users[n - 1].UserOccupation;
-    }
-
-    function updateTable() {
-        var table = '<table style="width:50%" border="1" id="ViewAllUsers"><tr><td>ID</td><td>Name</td><td>Occupation</td></tr></table>';
-        $('#ViewAllUsers').replaceWith(table);
-        var i;
-        for (i = 1; i <= Users.length; ++i) {
-            addTableRow(i);
-        }
-    }
-
-    function sort(by) {
-        if (by == 'UserID') {
-            Users.sort(function (a, b) {
-                return a.UserID - b.UserID;
-            });
-        }
-        else if (by == 'UserName') {
-            Users.sort(function (a, b) {
-                var a_prop = a.UserName;
-                var b_prop = b.UserName;
-                return ((a_prop < b_prop) ? -1 : ((a_prop > b_prop) ? 1 : 0));
-            });
-        }
-        else if (by == 'UserOccupation') {
-            Users.sort(function (a, b) {
-                var a_prop = a.UserOccupation;
-                var b_prop = b.UserOccupation;
-                return ((a_prop < b_prop) ? -1 : ((a_prop > b_prop) ? 1 : 0));
-            });
-
-        }
-        updateTable();
-    }
-
-    //Initial
-    $('#UserID').prop('readonly', true);
-    $('#UserID').val(1);
-
-    //Events
-    $('#AddUserButton').click(addEntry);
-    $('#SortBy').change(function () {
-        sort($('#SortBy').val());
-    });
-
-</script>
-
 </html>
