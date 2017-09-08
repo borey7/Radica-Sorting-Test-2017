@@ -70,24 +70,24 @@
         }
     }
 
-    function sort(By) {
-        if (By == 'UserID') {
+    function sort(by) {
+        if (by == 'UserID') {
             Users.sort(function (a, b) {
                 return a.UserID - b.UserID;
             });
         }
-        else if (By == 'UserName') {
+        else if (by == 'UserName') {
             Users.sort(function (a, b) {
-                var aName = a.UserName;
-                var bName = b.UserName;
-                return ((aName < bName) ? -1 : ((aName > bName) ? 1 : 0));
+                var a_prop = a.UserName;
+                var b_prop = b.UserName;
+                return ((a_prop < b_prop) ? -1 : ((a_prop > b_prop) ? 1 : 0));
             });
         }
-        else if (By == 'UserOccupation') {
+        else if (by == 'UserOccupation') {
             Users.sort(function (a, b) {
-                var aName = a.UserOccupation;
-                var bName = b.UserOccupation;
-                return ((aName < bName) ? -1 : ((aName > bName) ? 1 : 0));
+                var a_prop = a.UserOccupation;
+                var b_prop = b.UserOccupation;
+                return ((a_prop < b_prop) ? -1 : ((a_prop > b_prop) ? 1 : 0));
             });
 
         }
