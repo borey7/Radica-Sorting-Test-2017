@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sorting Test</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>    
+</head>
+
+<body>  
+    UserID<br><input type="text" id="UserID">
+    <input type="text" id="UserName" placeholder="UserName">
+    <input type="text" id="UserOccupation" placeholder="UserOccupation">
+    <button type="button" id="AddUserButton">Add</button><br><br> Sort by:
+    <select id="SortBy">
+        <option value="UserID">User ID</option>
+        <option value="UserName">User Name</option>
+        <option value="UserOccupation">User Occupation</option>        
+    </select><br><br>
+    <table style="width:50%" border="1" id="ViewAllUsers">
+        <tr>
+            <td>ID</td>
+            <td>Name</td>
+            <td>Occupation</td>
+        </tr>
+    </table>
+</body>
+<script>
+    //Properties    
+    var Users = [];
+    var UserID;
+    var UserName;
+    var UserOccupation;
+
+    //Functions
+    function addEntry() {
+        UserID = Users.length + 1;
+        var UserName = $('#UserName').val();
+        var UserOccupation = $('#UserOccupation').val();
+        Users.push({ UserID, UserName, UserOccupation });
+        addTableRow(UserID);
+        resetForm();
+    }
+
+    function resetForm() {
+        $('#UserID').val(UserID + 1);
+        $('#UserName').val("");
+        $('#UserOccupation').val("");
+    }
+
+    function addTableRow(n) {
+        var table = document.getElementById('ViewAllUsers');
+        var row = table.insertRow(n);
+        var col1 = row.insertCell(0);
+        var col2 = row.insertCell(1);
+        var col3 = row.insertCell(2);
+        col1.innerHTML = Users[n - 1].UserID;
+        col2.innerHTML = Users[n - 1].UserName;
+        col3.innerHTML = Users[n - 1].UserOccupation;
+    }
+
+    function updateTable() {
+        var table = '<table style="width:50%" border="1" id="ViewAllUsers"><tr><td>ID</td><td>Name</td><td>Occupation</td></tr></table>';
+        $('#ViewAllUsers').replaceWith(table);
+        var i;
+        for (i = 1; i <= Users.length; ++i) {
+            addTableRow(i);
+        }
+    }
+
+    function sort(By) {
+        if (By == 'UserID') {
+            Users.sort(function (a, b) {
+                return a.UserID - b.UserID;
+            });
+        }
+        else if (By == 'UserName') {
+            Users.sort(function (a, b) {
+                var aName = a.UserName;
+                var bName = b.UserName;
+                return ((aName < bName) ? -1 : ((aName > bName) ? 1 : 0));
+            });
+        }
+        else if (By == 'UserOccupation') {
+            Users.sort(function (a, b) {
+                var aName = a.UserOccupation;
+                var bName = b.UserOccupation;
+                return ((aName < bName) ? -1 : ((aName > bName) ? 1 : 0));
+            });
+
+        }
+        updateTable();
+    }
+
+    //Initial
+    $('#UserID').prop('readonly', true);
+    $('#UserID').val(1);
+
+    //Events
+    $('#AddUserButton').click(addEntry);
+    $('#SortBy').change(function () {
+        sort($('#SortBy').val());
+    });
+
+</script>
+
+</html>
